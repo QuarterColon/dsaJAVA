@@ -195,6 +195,96 @@ public class LL{
         return false;
     }
 
+    public int lengthCycle(Node head) {
+        Node fast = head;
+        Node slow = head;
+
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                Node temp = slow;
+                int length = 0;
+                do{
+                    temp = temp.next;
+                    length++;
+                } while (temp != slow);
+                return length;
+            }
+        }
+        return 0;
+    }
+
+    public Node detectStartNode(Node head){
+        int length = 0;
+
+        Node fast = head;
+        Node slow = head;
+
+        while (fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow){
+                length = lengthCycle(slow);
+                break;
+            }
+        }
+        if (length == 0){
+            return null;
+        }
+
+        fast = head;
+        slow = head;
+
+        while (length > 0){
+            slow = slow.next;
+            length--;
+        }
+
+        while (fast != slow) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return fast;
+    }
+
+    public boolean isHappy(int n){
+        int s = n;
+        int f = n;
+
+        do{
+            s = Square(s);
+            f = Square(Square(f));
+        } while(s != f);
+
+        if (s == 1){
+            return true;
+        }
+        return false;
+    }
+    private int Square(int n){
+        int sum = 0;
+
+        while(n>0){
+            int r = n % 10;
+            sum = r * r;
+            n/=10;
+        }
+        return sum;
+    }
+
+    public Node middleNode(Node head){
+        Node s = head;
+        Node f = head;
+
+        while(f != null && f.next != null){
+            s = s.next;
+            f = f.next.next;
+        }
+
+        return s;
+    }
+
     public static void main(String[] args) {
         LL list1 = new LL();
         LL list2 = new LL();
