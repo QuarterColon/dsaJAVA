@@ -45,6 +45,17 @@ public class LL{
         return node;
     }
 
+    public Node getMid(Node head){
+        Node midPrev = null;
+        while (head != null && head.next != null){
+            midPrev = (midPrev == null) ? head : midPrev.next;
+            head = head.next.next;
+        }
+        Node mid = midPrev.next;
+        midPrev.next = null;
+        return mid;
+    }
+
     public void insertFirst(int val){
         Node node = new Node(val);
         node.next = head;
@@ -283,6 +294,17 @@ public class LL{
         }
 
         return s;
+    }
+
+    public Node mergeSort(Node head){
+        if (head == null || head.next == null){
+            return head ;
+        }
+        Node mid = getMid(head);
+        Node left = mergeSort(head);
+        Node right = mergeSort(mid);
+
+        return head;
     }
 
     public static void main(String[] args) {
