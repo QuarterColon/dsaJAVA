@@ -307,6 +307,87 @@ public class LL{
         return head;
     }
 
+    public void reverseRec(Node node){
+        if  (node == tail){
+            head = tail;
+            return;
+        }
+        reverse(node.next);
+        tail.next = node;
+        tail = node;
+        tail.next = null;
+
+    }
+
+    public Node reverse(Node head){
+        if (head == null){
+            return head;
+        }
+        Node prev = null;
+        Node pres = head;
+        Node next = pres.next;
+
+        while (pres != null){
+            pres.next = prev;
+            prev = pres;
+            pres = next;
+            if (next != null){
+                next = next.next;
+            }
+        }
+        return prev;
+    }
+
+    public Node ReverseBetween(Node head, int left, int right){
+        if (left == right){
+            return head;
+        }
+        Node current = head;
+        Node prev = null;
+        for (int i=0;current != null && i < left - 1;i++ ){
+            prev = current;
+            current = current.next;
+        }
+
+        Node last = prev;
+        Node newEnd = current;
+        Node next = current.next;
+        for (int i = 0; current != null && i < right - left + 1; i++) {
+            current.next = prev;
+            prev = current;
+            current = next;
+            if (next != null){
+                next = next.next;
+            }
+        }
+
+        if (last != null) {
+            last.next = prev;
+        } else {
+            head = prev;
+        }
+        newEnd.next = current;
+        return head;
+    }
+    public boolean isPalindrome(Node head){
+        Node mid = middleNode(head);
+        Node headSecond = reverse(mid);
+        Node rereverseHead = headSecond;
+
+        while (head != null && headSecond != null){
+            if (head.value != headSecond.value){
+                break;
+            }
+            head = head.next;
+            headSecond = headSecond.next;
+        }
+        reverse(rereverseHead);
+
+        if (head == null || headSecond == null){
+            return true;
+        }
+        return false;
+    }
     public static void main(String[] args) {
         LL list1 = new LL();
         LL list2 = new LL();
