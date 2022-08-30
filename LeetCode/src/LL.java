@@ -388,6 +388,31 @@ public class LL{
         }
         return false;
     }
+
+    public void reorder(Node head){
+        if (head == null || head.next == null){
+            return;
+        }
+
+        Node mid = middleNode(head);
+
+        Node hs = reverse(mid);
+        Node hf = head;
+
+        while (hf != null && hs != null){
+            Node temp = hf.next;
+            hf.next = hs;
+            hf = temp;
+
+            temp = hs.next;
+            hs.next = hf;
+            hs = temp;
+        }
+
+        if (hf != null){
+            hf.next = null;
+        }
+    }
     public static void main(String[] args) {
         LL list1 = new LL();
         LL list2 = new LL();
