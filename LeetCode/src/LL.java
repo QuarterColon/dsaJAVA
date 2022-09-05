@@ -26,6 +26,15 @@ public class LL{
         }
     }
 
+    public int size(Node head){
+        Node current = head;int c=0;
+        while (current != null){
+            current = current.next;
+            c++;
+        }
+        return c;
+    }
+
     public Node find(int value){
         Node node = head;
         while(node != null){
@@ -413,6 +422,74 @@ public class LL{
             hf.next = null;
         }
     }
+
+    public Node reverseKGroup(Node head, int k){
+        if (k<=1 || head == null){
+            return head;
+        }
+        Node current = head;
+        Node prev = null;
+        int size = size(head);int c=0;
+
+        while(true) {
+
+
+            Node last = prev;
+            Node newEnd = current;
+            Node next = current.next;
+            for (int i = 0; (current != null) && (i < k) && (next != null); i++) {
+                current.next = prev;
+                prev = current;
+                current = next;
+                c++;
+                if (next != null) {
+                    next = next.next;
+                }
+            }
+
+            if (last != null) {
+                last.next = prev;
+            } else {
+                head = prev;
+            }
+            newEnd.next = current;
+
+            if (current == null || (size - c) < k ){
+                break;
+            }
+            prev = newEnd;
+        }
+        return head;
+
+    }
+    public Node rotate(Node head, int k){
+        if(k <= 0 || head == null || head.next == null){
+            return head;
+        }
+
+        Node last = head;
+        int size = 1;
+        while(last != null){
+            last = last.next;
+            size++;
+        }
+
+        last.next = head;
+        int r = k % size;
+        int skip = size - r;
+        Node newLast = head;
+
+        for (int i = 0; i < skip - 1; i++) {
+            newLast = newLast.next;
+        }
+        head = newLast.next;
+        newLast.next = null;
+
+        return head;
+
+        }
+
+
     public static void main(String[] args) {
         LL list1 = new LL();
         LL list2 = new LL();
