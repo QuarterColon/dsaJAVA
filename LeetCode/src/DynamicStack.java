@@ -3,7 +3,7 @@ public class DynamicStack extends CustomStack{
         super();
     }
     public DynamicStack(int size){
-        super();
+        super(size);
     }
 
     @Override
